@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Treasure Hunters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Add some basic styling here */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-align: center;
+            color: white;
+            background: #12c2e9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            background-size: cover; /* Adjust to cover the entire background */
+            background-position: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form {
+            margin-top: 20px;
+        }
+        .button {
+            margin-top: 10px;
+        }
+        #nameInputs {
+        margin-top: 20px;
+    }
+    #nameInputs {
+            margin-top: 20px;
+            max-height: 300px; /* Adjust the max height based on your preference */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        #nameInputs input {
+        display: block;
+        margin-bottom: 10px; /* Add margin-bottom to create space between input fields */
+        padding: 8px; /* Optional: Add padding for additional spacing inside input fields */
+    }
+    .whole-body{
+        background-color: rgb(43, 43, 43);
+        border: 5px solid rgb(102, 64, 64);
+        border-radius: 10px;
+        margin: 100px;
+    }
+    input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+.button {
+    padding: 10px 20px;
+    background-color: #6d2e37;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #6d2e37;
+}
+/* For smaller screens */
+@media (max-width: 768px) {
+    /* Example: Adjust font size */
+    h1 {
+        margin-top: -427px;
+        position: absolute;
+}
+body {
+                font-size: 14px;
+                background-color: cadetblue;
+                background: #12c2e9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+                background-size: cover;
+                background-position: center;
+                align-content: center;
+            }
+            .whole-body{
+                margin: 17px;
+            }
+            .container {
+                margin-left: 30px;
+                margin-right: 20px;
+                position: relative;
+                display: flex;
+            }
+
+            .form {
+                margin-top: 10px;
+            }
+
+            #nameInputs {
+                margin-top: 10px;
+                max-height: 200px; /* Adjust maximum height for input fields */
+                overflow-y: auto; /* Enable vertical scrolling */
+            }
+            #nameInputs input {
+        display: block;
+        margin-bottom: 10px; /* Add margin-bottom to create space between input fields */
+        padding: 8px; /* Optional: Add padding for additional spacing inside input fields */
+    }
+
+            .button {
+                margin-top: 10px;
+            }
+            #result{
+                position: relative;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                
+                
+
+            }
+       
+
+        }
+    </style>
+</head>
+<body>
+    <div class="whole-body">
+        <div class="container">
+            <h1>Christmas Friends</h1>
+            <div class="form" id="inputForm">
+                <label for="numPeople">Number of People (even):</label>
+                <input type="number" id="numPeople" min="2" step="2">
+                <button class="button" onclick="createInputFields()">Find Out</button>
+            </div>
+            <div id="nameInputs" style="display: none;"></div>
+        
+            <button class="button" id="calculateButton" style="display: none;" onclick="divideIntoTeams()">Calculate</button>
+            
+        </div>
+        <div id="result"></div>
+        
+    </div>
+
+    <script>
+        function createInputFields() {
+            const numPeopleInput = document.getElementById("numPeople");
+            const numPeople = parseInt(numPeopleInput.value);
+
+            if (numPeople % 2 !== 0) {
+                alert("Please enter an even number of people.");
+                return;
+            }
+
+            const nameInputsDiv = document.getElementById("nameInputs");
+            nameInputsDiv.innerHTML = "";
+            for (let i = 0; i < numPeople; i++) {
+                const input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("placeholder", `Enter name for person ${i + 1}`);
+                nameInputsDiv.appendChild(input);
+            }
+            nameInputsDiv.style.display = "block";
+            document.getElementById("calculateButton").style.display = "block";
+        }
+        
+
+        function divideIntoTeams() {
+            const nameInputs = document.getElementById("nameInputs").querySelectorAll("input");
+            const names = Array.from(nameInputs).map(input => input.value.trim()).filter(name => name !== "");
+
+            if (names.length !== parseInt(document.getElementById("numPeople").value)) {
+                alert("Please enter names for all people.");
+                return;
+            }
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            const treasures = names.filter((_, index) => index % 2 === 0);
+            const hunters = names.filter((_, index) => index % 2 !== 0);
+
+            const treasuresDiv = document.createElement("div");
+            treasuresDiv.innerHTML = "<h3>Keepers</h3>";
+            treasures.forEach((treasure) => {
+                const treasureDiv = document.createElement("p");
+                treasureDiv.textContent = treasure;
+                treasuresDiv.appendChild(treasureDiv);
+            });
+            resultDiv.appendChild(treasuresDiv);
+
+            const huntersDiv = document.createElement("div");
+            huntersDiv.innerHTML = "<h3>Hunters</h3>";
+            hunters.forEach((hunter) => {
+                const hunterDiv = document.createElement("p");
+                hunterDiv.textContent = hunter;
+                huntersDiv.appendChild(hunterDiv);
+            });
+            resultDiv.appendChild(huntersDiv);
+        }
+    </script>
+</body>
+</html>
