@@ -172,38 +172,52 @@ background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
         
 
         function divideIntoTeams() {
-            const nameInputs = document.getElementById("nameInputs").querySelectorAll("input");
-            const names = Array.from(nameInputs).map(input => input.value.trim()).filter(name => name !== "");
+    const nameInputs = document.getElementById("nameInputs").querySelectorAll("input");
+    const names = Array.from(nameInputs).map(input => input.value.trim()).filter(name => name !== "");
 
-            if (names.length !== parseInt(document.getElementById("numPeople").value)) {
-                alert("Please enter names for all people.");
-                return;
-            }
+    if (names.length !== parseInt(document.getElementById("numPeople").value)) {
+        alert("Please enter names for all people.");
+        return;
+    }
 
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "";
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "";
 
-            const treasures = names.filter((_, index) => index % 2 === 0);
-            const hunters = names.filter((_, index) => index % 2 !== 0);
+    // Shuffle the names array
+    const shuffledNames = shuffleArray(names);
 
-            const treasuresDiv = document.createElement("div");
-            treasuresDiv.innerHTML = "<h3>Keepers</h3>";
-            treasures.forEach((treasure) => {
-                const treasureDiv = document.createElement("p");
-                treasureDiv.textContent = treasure;
-                treasuresDiv.appendChild(treasureDiv);
-            });
-            resultDiv.appendChild(treasuresDiv);
+    const midIndex = Math.floor(shuffledNames.length / 2);
+    const treasures = shuffledNames.slice(0, midIndex);
+    const hunters = shuffledNames.slice(midIndex);
 
-            const huntersDiv = document.createElement("div");
-            huntersDiv.innerHTML = "<h3>Hunters</h3>";
-            hunters.forEach((hunter) => {
-                const hunterDiv = document.createElement("p");
-                hunterDiv.textContent = hunter;
-                huntersDiv.appendChild(hunterDiv);
-            });
-            resultDiv.appendChild(huntersDiv);
-        }
+    const treasuresDiv = document.createElement("div");
+    treasuresDiv.innerHTML = "<h3>Keepers</h3>";
+    treasures.forEach((treasure) => {
+        const treasureDiv = document.createElement("p");
+        treasureDiv.textContent = treasure;
+        treasuresDiv.appendChild(treasureDiv);
+    });
+    resultDiv.appendChild(treasuresDiv);
+
+    const huntersDiv = document.createElement("div");
+    huntersDiv.innerHTML = "<h3>Hunters</h3>";
+    hunters.forEach((hunter) => {
+        const hunterDiv = document.createElement("p");
+        hunterDiv.textContent = hunter;
+        huntersDiv.appendChild(hunterDiv);
+    });
+    resultDiv.appendChild(huntersDiv);
+}
+
+// Function to shuffle an array (Fisher-Yates shuffle algorithm)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
     </script>
 </body>
 </html>
