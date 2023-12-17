@@ -1,6 +1,6 @@
-# Keepers v/s Hunters
+# Chirstmas Friends
 
-Welcome to Treasure Hunters! This web application is designed to assist in dividing a group of people into teams of treasures and hunters for various games or activities.
+Welcome to Keepers v/s Hunters game! This web application is designed to assist in dividing a group of people into teams of treasures and hunters for various games or activities. And the treasures needs to hide and give clue to the set of hunters and whoever first finds the treasure needs to exchange their gifts.Currently now the system is designed for even number of participants.
 
 ## Overview
 
